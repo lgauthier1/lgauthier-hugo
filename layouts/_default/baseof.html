@@ -9,7 +9,6 @@
 	<meta name="theme-color" content="{{.}}">
 	<meta name="msapplication-TileColor" content="{{.}}">
 	{{- end }}
-	{{- partial "structured-data.html" . }}
 	{{- partial "favicons.html" }}
 	<title>{{.Title}}</title>
 	{{ range .AlternativeOutputFormats -}}
@@ -21,15 +20,10 @@
 	{{- range .Site.Params.customCSS }}
 	<link rel="stylesheet" href="{{ . | absURL }}">
 	{{- end }}
-	{{- if templates.Exists "partials/extra-head.html" -}}
-	{{ partial "extra-head.html" . }}
-	{{- end }}
 </head>
 
 <body id="page">
-	{{ block "header" . -}}{{ end -}}
 	{{ block "main" . -}}{{ end -}}
-	{{ block "footer" . -}}{{ end }}
 
 	{{ $main := resources.Get "js/main.js" -}}
 	{{ if .Site.Params.code_copy_button | default true -}}
@@ -41,10 +35,6 @@
 		<script src="{{ $script.Permalink }}" {{ printf "integrity=%q" $script.Data.Integrity | safeHTMLAttr }} crossorigin="anonymous"></script>
 	{{ end }}
 
-	{{- partial "analytics.html" . }}
-	{{- if templates.Exists "partials/extra-foot.html" -}}
-	{{ partial "extra-foot.html" . }}
-	{{- end }}
 </body>
 
 </html>
